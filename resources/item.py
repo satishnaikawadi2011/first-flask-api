@@ -6,7 +6,7 @@ class Item(Resource):
 
     parser = reqparse.RequestParser()
 
-    # parser.add_argument('name',type=str,required=True,help='This field must not be blank')
+    parser.add_argument('store_id',type=int,required=True,help='Every item must have store id')
     parser.add_argument('price',type=float,required=True,help='This field must not be blank')
 
     @jwt_required()
@@ -22,7 +22,7 @@ class Item(Resource):
 
         data = Item.parser.parse_args()
 
-        item = ItemModel(name,data['price'])
+        item = ItemModel(name,data['price'],data['store_id'])
 
         try:
             item.save_to_db()
